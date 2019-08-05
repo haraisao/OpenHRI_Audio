@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="E:\OpenHRI\1.0\OpenHRIAudio\src\OpenHRIAudioManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\OpenHRI\1.0\OpenHRIAudio\src\windowing.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="E:\OpenHRI\1.0\OpenHRIAudio\cmake_files\OpenHRIAudioManager\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{ED87BC24-5BAA-34F5-A206-A061645F8A24}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
