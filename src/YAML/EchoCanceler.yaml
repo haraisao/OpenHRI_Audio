@@ -1,0 +1,47 @@
+name : EchoCanceler
+version: 2.0.0
+vendor: AIST
+max_instances: 1
+executionType: PeriodicExecutionContext
+executionRate: 1.0
+description: Echo Canceler
+category: OpenHRI
+componentKind: DataFlowComponent
+activityType: PERIODIC
+componentType: STATIC 
+maintainer: Isao Hara
+author: Isao Hara(isao-hara@aist.go.jp)
+
+actions:
+  - OnInitialize: true
+  - OnFinalize: true
+  - OnStartup: false
+  - OnShutdown: false
+  - OnActivated: true
+  - OnDeactivated: true
+  - OnAborting: false
+  - OnError: false
+  - OnReset: false
+  - OnExecute: true
+  - OnStateUpdate: false
+  - OnRateChanged: false
+  - OnAction: false
+  - OnModeChanged: false
+
+dataport : 
+  - name : AudioDataIn
+    flow : in
+    type : RTC::TimedOctetSeq
+    description : マイクから取得した音声データを入力
+  - name : ReferenceAudioDataIn
+    flow : in
+    type : RTC::TimedOctetSeq
+    description : 音声出力コンポーネントからの音声データ(除去対象の音声データ) を入力
+  - name : AudioDataOut
+    flow : out
+    type : RTC::TimedOctetSeq
+    description : エコー除去された音声データを出力
+
+serviceport :
+
+configuration :

@@ -1,0 +1,46 @@
+name : WebRTCVAD
+version: 2.0.0
+vendor: AIST
+max_instances: 1
+executionType: PeriodicExecutionContext
+executionRate: 1.0
+description: VAD using WebRTC
+category: OpenHRI
+componentKind: DataFlowComponent
+activityType: PERIODIC
+componentType: STATIC 
+maintainer: Isao Hara
+author: Isao Hara(isao-hara@aist.go.jp)
+
+actions:
+  - OnInitialize: true
+  - OnFinalize: true
+  - OnStartup: false
+  - OnShutdown: false
+  - OnActivated: true
+  - OnDeactivated: true
+  - OnAborting: false
+  - OnError: false
+  - OnReset: false
+  - OnExecute: true
+  - OnStateUpdate: false
+  - OnRateChanged: false
+  - OnAction: false
+  - OnModeChanged: false
+
+dataport :
+  - name : AuidoDataIn
+    flow : in 
+    type : RTC::TimedOctetSeq
+    description : Audio data input
+  - name : AudioDataOut
+    flow : out
+    type : RTC::TimedOctetSeq
+    description : Audio data out
+    
+configuration :
+  - name : FileterLength
+    type : int 
+    defaultValue : 5
+    constraints : x >= 1
+    description : Filter length to smooth voice detection result.

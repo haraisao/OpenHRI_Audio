@@ -1,0 +1,56 @@
+name : Mixer
+version: 2.0.0
+vendor: AIST
+max_instances: 1
+executionType: PeriodicExecutionContext
+executionRate: 1.0
+description: Mixer
+category: OpenHRI
+componentKind: DataFlowComponent
+activityType: PERIODIC
+componentType: STATIC 
+maintainer: Isao Hara
+author: Isao Hara(isao-hara@aist.go.jp)
+
+actions:
+  - OnInitialize: true
+  - OnFinalize: true
+  - OnStartup: false
+  - OnShutdown: false
+  - OnActivated: true
+  - OnDeactivated: true
+  - OnAborting: false
+  - OnError: false
+  - OnReset: false
+  - OnExecute: true
+  - OnStateUpdate: false
+  - OnRateChanged: false
+  - OnAction: false
+  - OnModeChanged: false
+
+dataport :
+  - name : micAudioDataIn
+    flow : in
+    type : RTC::TimedOctetSeq
+    description : マイクから取得された音声データを入力
+  - name : micReferenceAudioDataIn
+    flow : in
+    type : RTC::TimedOctetSeq
+    description : 音声出力コンポーネント等からのミキシングする音声データを入力
+  - name : micAudioDataOut
+    flow : out
+    type : RTC::TimedOctetSeq
+    description : ミキシングされた音声データを出力
+
+configuration :
+  - name : OutputChannelNumbers
+    type : int
+    defaultValue : 1
+    constraints : x >= 1
+    description : 出力する音声データのチャンネル数
+  - name : MixGains
+    type : std::vector<double>
+    defaultValue : 0.5,0.5
+    constraints : 
+    description : 各チャンネルの混合重み
+    

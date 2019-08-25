@@ -1,0 +1,50 @@
+name : Skeleton2JointAngleRTC
+version: 2.0.0
+vendor: AIST
+max_instances: 1
+executionType: PeriodicExecutionContext
+executionRate: 1.0
+description: Skeketon model to Joint angles converter
+category: OpenHRI
+componentKind: DataFlowComponent
+activityType: PERIODIC
+componentType: STATIC 
+maintainer: Isao Hara
+author: Isao Hara(isao-hara@aist.go.jp)
+
+actions:
+  - OnInitialize: true
+  - OnFinalize: true
+  - OnStartup: false
+  - OnShutdown: false
+  - OnActivated: true
+  - OnDeactivated: true
+  - OnAborting: false
+  - OnError: false
+  - OnReset: false
+  - OnExecute: true
+  - OnStateUpdate: false
+  - OnRateChanged: false
+  - OnAction: false
+  - OnModeChanged: false
+
+dataport :
+  - name : skeleton
+    flow : in
+    type : RTC::TimedDoubleSeq
+    description : KINECTで取得した人の姿勢データ。データ長：20、対応ポート：KinectRTC.skeleton
+  - name : command
+    flow : in
+    type : RTC::TimedString
+    description : コマンド入力。対応ポート：SEAT.command
+  - name : joint_angle
+    flow : out
+    type : RTC::TimedDoubleSeq
+    description : 各関節の角度データ(単位Radian)＋SPINEのY軸方向の位置。データ長：21、対応ポート：RobotMotion.targetAngle
+
+configuration :
+  - name : mode
+    type : int
+    defaultValue : 0
+    constraints : 0,1
+    description : コマンドモードの切替。0：コマンドモードOff, 1：コマンドモードOn

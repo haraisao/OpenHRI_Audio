@@ -1,0 +1,62 @@
+name : SamplingRateConverter
+version: 2.0.0
+vendor: AIST
+max_instances: 1
+executionType: PeriodicExecutionContext
+executionRate: 1.0
+description: Sampling Rate Converter
+category: OpenHRI
+componentKind: DataFlowComponent
+activityType: PERIODIC
+componentType: STATIC 
+maintainer: Isao Hara
+author: Isao Hara(isao-hara@aist.go.jp)
+
+actions:
+  - OnInitialize: true
+  - OnFinalize: true
+  - OnStartup: false
+  - OnShutdown: false
+  - OnActivated: true
+  - OnDeactivated: true
+  - OnAborting: false
+  - OnError: false
+  - OnReset: false
+  - OnExecute: true
+  - OnStateUpdate: false
+  - OnRateChanged: false
+  - OnAction: false
+  - OnModeChanged: false
+
+dataport :
+  - name : AudioDataIn
+    flow : in
+    type : RTC::TimedOctetSeq
+    description : 音声データ
+  - name : AudioDataOut
+    flow : out
+    type : RTC::TimedOctetSeq
+    description : 変換された音声データ
+
+configuration :
+  - name : InputSampleRate
+    type : int
+    defaultValue : 16000
+    constraints : x >= 1
+    description : 入力する音声のサンプリング周波数(Hz)
+  - name : InputBitDepth
+    type : string
+    defaultValue : 16
+    constraints : 8,16,24,33, float32
+    description : 入力する音声のビット幅
+  - name : OutputSampleRate
+    type : int
+    defaultValue : 16000
+    constraints : x >= 1
+    description : 変換後の音声データのサンプリング周波数(Hz)
+  - name : OutputBitDepth
+    type : string
+    defaultValue : 16
+    constraints : 8,16,24,32, float32
+    description : 変換後の音声データのビット幅
+    

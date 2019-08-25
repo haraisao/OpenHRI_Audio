@@ -1,59 +1,120 @@
 #
-# CMake for WavPlayer Component
 #
-
-cmake_minimum_required(VERSION 3.1.0 FATAL_ERROR)
+#
+cmake_minimum_required(VERSION 3.0.2)
 
 project(WavPlayer)
+find_package(OpenRTM REQUIRED)
 
-#file(TO_CMAKE_PATH $ENV{RTM_ROOT} rtm_root)
+string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)
+set(PROJECT_VERSION 2.0.0 CACHE STRING "WavPlayer version")
+set(PROJECT_TYPE "c++/OpenHRI")
 
-set(CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS true)
-set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/../cmake" "${PROJECT_SOURCE_DIR}/cmake_modules")
+#
+# Check Distribution and Package Manager
+CheckPkgManager()
 
-set(LINUX_PACKAGE_GENERATOR "DEB")
-#set(LINUX_PACKAGE_GENERATOR "RPM")
+# Add an "uninstall" target
+AddUninstallTarget()
 
-#setting  for OpenHRI
-set(SRC_DIRS "${PROJECT_SOURCE_DIR}/../../src")
-find_package(SndFile REQUIRED)
+option(BUILD_DOCUMENTATION "Build the documentation" OFF)
+option(BUILD_IDL "Build and install idl" ON)
 
-if (WIN32)
-	set(SNDFILE_LIBRARIES ${SNDFILE_LIBRARY})
-   list(APPEND INCLUDE_DIRS ${SNDFILE_INCLUDE_DIR})
-   list(APPEND LIBRARIES ${SNDFILE_LIBRARIES})
-else (WIN32)
-    find_package(gtkmm-2.4 REQUIRED)
-    list(APPEND INCLUDE_DIRS ${GTKMM_INCLUDE_DIRS})
-    list(APPEND LIBRARIES ${GTKMM_LIBS} ${SNDFILE_LIBRARIES})
-endif (WIN32)
+option(STATIC_LIBS "Build static libraries" OFF)
+if(STATIC_LIBS)
+    set(LIB_TYPE STATIC)
+else(STATIC_LIBS)
+    set(LIB_TYPE SHARED)
+endif(STATIC_LIBS)
 
-ADD_DEFINITIONS(-DPACKAGE="${PACKAGE}" -DLOCALEDIR="${LOCALEDIR}")
+# Set up installation directories
+SetupInstDirs()
 
+# Subdirectories
+#add_subdirectory(cmake)
+if(BUILD_DOCUMENTATION)
+    add_subdirectory(doc)
+endif(BUILD_DOCUMENTATION)
 
-# component settings
-set(RTC_NAME "${PROJECT_NAME}")
-set(RTC_VERSION "1.0.0")
-set(RTC_LANG "c++")
-set(RTC_DESCRIPTION "Sound play Module by using SndFile Library")
-set(RTC_VENDOR "AIST")
-set(RTC_MAINTAINER "openrtp@m.aist.go.jp")
+##############
+#  Build
+##############
+if(BUILD_IDL)
+  include("${OPENRTM_DIR}/cmake/idl_compile.cmake")
+  set(idls
+    ${CMAKE_CURRENT_SOURCE_DIR}/idl/BasicDataType.idl
+  )
+  OPENRTM_COMPILE_IDL_FILES(${idls})
+  FILTER_LIST("ALL_IDL_SRCS" "hh$" idl_headers)
+endif(BUILD_IDL)
 
+#
+#
+set(comp_headers
+  ${PROJECT_SOURCE_DIR}/include/WavPlayer.h
+)
 
-string(TOLOWER ${RTC_NAME} PACKAGE_NAME)
-set(PACKAGE_VERSION "${RTC_VERSION_MAJOR}.${RTC_VERSION_MINOR}.${RTC_VERSION_PATCH}")
+set(rtc_sources
+    src/WavPlayer.cpp
+)
 
-set(LIBS_SRCS ${SRC_DIRS}/${PROJECT_NAME}.cpp)
+set(rtc_exec_src src/WavPlayerComp.cpp)
 
-set(LIBS_INCS ${SRC_DIRS}/${PROJECT_NAME}.h)
+RewriteBuildOptions()
 
-set(EXEC_SRCS ${SRC_DIRS}/${PROJECT_NAME}Comp.cpp)
+include_directories(
+  ${PROJECT_SOURCE_DIR}/include
+  ${PROJECT_BINARY_DIR}
+  ${PROJECT_BINARY_DIR}/idl
+  ${OPENRTM_INCLUDE_DIRS}
+)
 
-set(OTHER_SRCS CMakeLists.txt Doxyfile.in
-               ${PROJECT_NAME}.conf rtc.conf)
+add_definitions(${OPENRTM_CFLAGS})
+link_directories(${OPENRTM_LIBRARY_DIRS})
 
-if(CMAKE_COMPILER_IS_GNUCXX)
-  add_definitions(-std=gnu++0x)
+#############
+#  3rdPary Libs
+find_package(libsndfile REQUIRED)
+include_directories(${SNDFILE_INCLUDE_DIR})
+set(OPTION_LIBRARIES ${SNDFILE_LIBRARIES})
+
+#############
+#  RTC
+set(PROJECT_RTC_SOURCES ${rtc_sources} ${comp_headers} ${ALL_IDL_SRCS})
+
+#
+#  compile IDL file
+set_source_files_properties(${ALL_IDL_SRCS} PROPERTIES GENERATED 1)
+if(NOT TARGET ALL_IDL_TGT)
+  add_custom_target(ALL_IDL_TGT)
 endif()
 
-include(RTC)
+#
+#  Dynamic local library
+add_library(${PROJECT_NAME} ${LIB_TYPE} ${PROJECT_RTC_SOURCES})
+set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "")
+add_dependencies(${PROJECT_NAME} ALL_IDL_TGT)
+target_link_libraries(${PROJECT_NAME} ${OPENRTM_LIBRARIES} ${OPTION_LIBRARIES})
+
+#
+# Standalone executable
+add_executable(${PROJECT_NAME}Comp ${rtc_exec_src} ${PROJECT_RTC_SOURCES})
+add_dependencies(${PROJECT_NAME}Comp ALL_IDL_TGT)
+target_link_libraries(${PROJECT_NAME}Comp ${OPENRTM_LIBRARIES} ${OPTION_LIBRARIES})
+
+#############
+# Install
+#############
+install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}Comp
+    EXPORT ${PROJECT_NAME}
+    RUNTIME DESTINATION ${INSTALL_PREFIX} COMPONENT componenet
+    LIBRARY DESTINATION ${INSTALL_PREFIX} COMPONENT componenet
+    ARCHIVE DESTINATION ${INSTALL_PREFIX} COMPONENT componenet
+ )
+
+install(FILES ${SNDFILE_RUNTIME} DESTINATION ${INSTALL_PREFIX})
+
+####################
+# Package creation
+# By default, do not warn when built on machines using only VS Express:
+#CreatePackageCPack()

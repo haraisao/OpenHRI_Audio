@@ -1,52 +1,49 @@
 #
-#  CMake for PortAudioInput Component
 #
-cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
+#
+cmake_minimum_required(VERSION 3.0.2)
 
 project(PortAudioInput)
-
-#file(TO_CMAKE_PATH $ENV{RTM_ROOT} RTM_ROOT)
-
-set(CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS true)
-set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/../cmake" "${PROJECT_SOURCE_DIR}/cmake_modules" )
-
-set(LINUX_PACKAGE_GENERATOR "DEB")
-#set(LINUX_PACKAGE_GENERATOR "RPM")
-
-#setting for OpenHRI
-set(SRC_DIRS "${PROJECT_SOURCE_DIR}/../../src")
-
 find_package(OpenRTM REQUIRED)
-#find_package(PortAudio REQUIRED)
 
-find_package(PortAudio REQUIRED)
-list(APPEND INCLUDE_DIRS ${PORTAUDIO_INCLUDE_DIR})
-list(APPEND LIBRARY_DIRS ${PORTAUDIO_LIBRARY_DIR})
+string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)
+set(PROJECT_VERSION 2.0.0 CACHE STRING "PortAudioInput version")
+set(PROJECT_TYPE "c++/OpenHRI")
 
-if (WIN32)
-  list(APPEND LIBRARIES  ${PORTAUDIO_LIB} "winmm.lib")
-else (WIN32)
-  list(APPEND LIBRARIES ${PORTAUDIO_LIB})
-endif(WIN32)
+#
+# Check Distribution and Package Manager
+CheckPkgManager()
 
-ADD_DEFINITIONS(-DPACKAGE="${PACKAGE}" -DLOCALEDIR="${LOCALEDIR}")
+# Add an "uninstall" target
+AddUninstallTarget()
 
-# component settings
-set(RTC_NAME "${PROJECT_NAME}")
-set(RTC_VERSION "1.0.0")
-set(RTC_LANG "c++")
-set(RTC_DESCRIPTION "Audio Input Module by using PortAudio Library")
-set(RTC_VENDOR "AIST")
-set(RTC_MAINTAINER "openrtp@m.aist.go.jp")
+option(BUILD_DOCUMENTATION "Build the documentation" OFF)
+option(BUILD_IDL "Build and install idl" OFF)
 
-set(LIBS_SRCS ${SRC_DIRS}/${PROJECT_NAME}.cpp  ${SRC_DIRS}/windowing.cpp)
+option(STATIC_LIBS "Build static libraries" OFF)
+if(STATIC_LIBS)
+    set(LIB_TYPE STATIC)
+else(STATIC_LIBS)
+    set(LIB_TYPE SHARED)
+endif(STATIC_LIBS)
 
-set(LIBS_INCS ${SRC_DIRS}/${PROJECT_NAME}.h)
+# Set up installation directories
+SetupInstDirs()
 
-set(EXEC_SRCS ${SRC_DIRS}/${PROJECT_NAME}Comp.cpp)
+# Subdirectories
+#add_subdirectory(cmake)
+if(BUILD_DOCUMENTATION)
+    add_subdirectory(doc)
+endif(BUILD_DOCUMENTATION)
 
-set(OTHER_SRCS CMakeLists.txt Doxyfile.in
-               ${PROJECT_NAME}.conf rtc.conf)
+if(BUILD_IDL)
+    add_subdirectory(idl)
+endif(BUILD_IDL)
 
-include(RTC)
+add_subdirectory(include)
+MAP_ADD_STR(headers  "${PROJECT_SOURCE_DIR}/include/" comp_headers)
+add_subdirectory(src)
 
+# Package creation
+# By default, do not warn when built on machines using only VS Express:
+#CreatePackageCPack()

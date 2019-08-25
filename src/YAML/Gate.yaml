@@ -1,0 +1,51 @@
+name : Gate
+version: 2.0.0
+vendor: AIST
+max_instances: 1
+executionType: PeriodicExecutionContext
+executionRate: 1.0
+description: Gate
+category: OpenHRI
+componentKind: DataFlowComponent
+activityType: PERIODIC
+componentType: STATIC 
+maintainer: Isao Hara
+author: Isao Hara(isao-hara@aist.go.jp)
+
+actions:
+  - OnInitialize: true
+  - OnFinalize: true
+  - OnStartup: false
+  - OnShutdown: false
+  - OnActivated: true
+  - OnDeactivated: true
+  - OnAborting: false
+  - OnError: false
+  - OnReset: false
+  - OnExecute: true
+  - OnStateUpdate: false
+  - OnRateChanged: false
+  - OnAction: false
+  - OnModeChanged: false
+
+dataport :
+  - name : AudioDataIn
+    flow : in
+    type : RTC::TimedOctetSeq
+    description : Audio data input
+  - name : GateIn
+    flow : in
+    type : RTC::TimedBoolean
+    description : Gate data input
+  - name : AudioDataOut
+    flow : out
+    type : RTC::TimedOctetSeq
+    description : Audio data output
+    
+configuration :
+  - name :
+    type :
+    defaultValue :
+    constraints :
+    description :
+    

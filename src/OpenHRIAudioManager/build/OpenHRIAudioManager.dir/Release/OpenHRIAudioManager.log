@@ -1,4 +1,0 @@
-﻿  OpenHRIAudioManager.cpp
-C:\Program Files (x86)\OpenRTM-aist\1.1.2\coil/config_coil.h(86): warning C4005: 'PACKAGE': マクロが再定義されました。
-  C:\Program Files (x86)\OpenRTM-aist\1.1.2\coil/config_coil.h(86): note: コマンド ラインの引数: 'PACKAGE' の前の定義を確認してください
-  OpenHRIAudioManager.vcxproj -> E:\OpenHRI\1.0\OpenHRIAudio\cmake_files\OpenHRIAudioManager\build\Release\OpenHRIAudioManager.exe

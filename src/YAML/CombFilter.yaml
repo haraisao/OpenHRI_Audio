@@ -1,0 +1,61 @@
+name : CombFilter
+version: 2.0.0
+vendor: AIST
+max_instances: 1
+executionType: PeriodicExecutionContext
+executionRate: 1.0
+description: Comb Filter
+category: OpenHRI
+componentKind: DataFlowComponent
+activityType: PERIODIC
+componentType: STATIC 
+maintainer: Isao Hara
+author: Isao Hara(isao-hara@aist.go.jp)
+
+actions:
+  - OnInitialize: true
+  - OnFinalize: true
+  - OnStartup: false
+  - OnShutdown: false
+  - OnActivated: true
+  - OnDeactivated: true
+  - OnAborting: false
+  - OnError: false
+  - OnReset: false
+  - OnExecute: true
+  - OnStateUpdate: false
+  - OnRateChanged: false
+  - OnAction: false
+  - OnModeChanged: false
+
+dataport :
+  - name : AudioDataIn
+    flow : in
+    type : RTC::TimedOctetSeq
+    description : 音声データを入力
+  - name : AudioDataOut
+    flow : out
+    type : RTC::TimedOctetSeq
+    description : コムフィルタ処理後の音声データを出力
+
+configuration :
+  - name : SampleRate
+    type : int
+    defaultValue : 16000
+    constraints : x >= 1
+    description : 入力音声データのサンプリング周波数 (Hz)
+  - name : Frequency
+    type : int
+    defaultValue : 100
+    constraints : x >= 0
+    description : ノイズを削減する周波数 (Hz)
+  - name : Gain
+    type : int
+    defaultValue : -1
+    constraints : -1 <= x <= 1
+    description : 加減算する度合い
+  - name : ChannelNumbers
+    type : int
+    defaultValue : 1
+    constraints : x >= 1
+    description : 出力する音声データのチャンネル数

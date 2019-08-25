@@ -1,0 +1,57 @@
+name : SimpleGestureRTC
+version: 2.0.0
+vendor: AIST
+max_instances: 1
+executionType: PeriodicExecutionContext
+executionRate: 1.0
+description: Simple Gesture Recognition
+category: OpenHRI
+componentKind: DataFlowComponent
+activityType: PERIODIC
+componentType: STATIC 
+maintainer: Isao Hara
+author: Isao Hara(isao-hara@aist.go.jp)
+
+actions:
+  - OnInitialize: true
+  - OnFinalize: true
+  - OnStartup: false
+  - OnShutdown: false
+  - OnActivated: true
+  - OnDeactivated: true
+  - OnAborting: false
+  - OnError: false
+  - OnReset: false
+  - OnExecute: true
+  - OnStateUpdate: false
+  - OnRateChanged: false
+  - OnAction: false
+  - OnModeChanged: false
+
+dataport :
+  - name : skeleton
+    flow : in
+    type : RTC::TimedDoubleSeq
+    description : KINECTで取得した人の姿勢データ、データ長：20。対応ポート：KinectRTC.skeleton
+  - name : command
+    flow : out
+    type : RTC::TimedString
+    description : ジェスチャ認識結果、対応ポート：SEAT.gestureなど
+  - name : left_hand
+    flow : out
+    type : RTC::TimedString
+    description : 左手のジェスチャ認識領域での左手の動作確認結果、対応ポート：SEAT.gestureなど
+  - name : right_hand
+    flow : out
+    type : RTC::TimedString
+    description : 右手のジェスチャ認識領域での右手の動作確認結果、対応ポート：SEAT.gestureなど
+  - name : left_hand_pos
+    flow : out
+    type : RTC::TimedDouble
+    description : 左手がstay,Movingの状態時の左肩からの距離(右方向が正)
+  - name : right_hand_pos
+    flow : out
+    type : RTC::TimedDouble
+    description : 右手がstay,Movingの状態時の右肩からの距離(右方向が正)
+
+configuration :

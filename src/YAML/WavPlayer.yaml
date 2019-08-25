@@ -1,0 +1,58 @@
+name : WavPlayer
+version: 2.0.0
+vendor: AIST
+max_instances: 1
+executionType: PeriodicExecutionContext
+executionRate: 1.0
+description: Play audio data from WAV file
+category: OpenHRI
+componentKind: DataFlowComponent
+activityType: PERIODIC
+componentType: STATIC 
+maintainer: Isao Hara
+author: Isao Hara(isao-hara@aist.go.jp)
+
+actions:
+  - OnInitialize: true
+  - OnFinalize: true
+  - OnStartup: false
+  - OnShutdown: false
+  - OnActivated: true
+  - OnDeactivated: true
+  - OnAborting: false
+  - OnError: false
+  - OnReset: false
+  - OnExecute: true
+  - OnStateUpdate: false
+  - OnRateChanged: false
+  - OnAction: false
+  - OnModeChanged: false
+
+dataport :
+  - name : AudioDataOut
+    flow : out
+    type : RTC::TimedOctetSeq
+    description : 再生するする音声データを出力
+
+configuration :
+
+  - name : OutputSampleRate
+    type : int
+    defaultValue : 16000
+    constraints : x >= 1
+    description : 入力される音声データのサンプリング周波数(Hz)
+  - name : ChannelNumbers
+    type : int
+    defaultValue : 1
+    constraints : x >= 1
+    description : 音声データのチャンネル数
+  - name : FileName
+    type : string
+    defaultValue : wavrecord-default.wav
+    constraints :
+    description : 
+  - name : Delay
+    type : int
+    defaultValue : 1
+    constraints : x >= 1
+    description : Delay

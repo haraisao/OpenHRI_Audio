@@ -1,0 +1,52 @@
+name : KinectAudioInput
+version: 2.0.0
+vendor: AIST
+max_instances: 1
+executionType: PeriodicExecutionContext
+executionRate: 1.0
+description: Kinect Audio Input
+category: OpenHRI
+componentKind: DataFlowComponent
+activityType: PERIODIC
+componentType: STATIC 
+maintainer: Isao Hara
+author: Isao Hara(isao-hara@aist.go.jp)
+
+actions:
+  - OnInitialize: true
+  - OnFinalize: true
+  - OnStartup: false
+  - OnShutdown: false
+  - OnActivated: true
+  - OnDeactivated: true
+  - OnAborting: false
+  - OnError: false
+  - OnReset: false
+  - OnExecute: true
+  - OnStateUpdate: false
+  - OnRateChanged: false
+  - OnAction: false
+  - OnModeChanged: false
+
+dataport :
+  - name : signal
+    flow : out
+    type : RTC::TimedOctetSeq
+    description : 録音した音声データ
+  - name : angle
+    flow : out
+    type : RTC::TimedDouble
+    description : 録音された音源の方向
+    
+configuration :
+  - name : max_angle
+    type : double
+    defaultValue : 0.3
+    constraints : -0.9 <= x <= 0.9
+    description : 録音可能な音源の方向の上限（Kinectの正面を0とする)
+  - name : min_angle
+    type : double
+    defaultValue : -0.3
+    constraints : -0.9 <= x <= 0.9
+    description : 録音可能な音源の方向の下限（Kinectの正面を0とする)
+    

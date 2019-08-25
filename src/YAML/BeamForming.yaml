@@ -1,0 +1,68 @@
+ame :  BeamForming
+version: 2.0.0
+vendor: AIST
+max_instances: 1
+executionType: PeriodicExecutionContext
+executionRate: 1.0
+description: Beam Forming
+category: OpenHRI
+componentKind: DataFlowComponent
+activityType: PERIODIC
+componentType: STATIC 
+maintainer: Isao Hara
+author: Isao Hara(isao-hara@aist.go.jp)
+
+actions:
+  - OnInitialize: true
+  - OnFinalize: true
+  - OnStartup: false
+  - OnShutdown: false
+  - OnActivated: true
+  - OnDeactivated: true
+  - OnAborting: false
+  - OnError: false
+  - OnReset: false
+  - OnExecute: true
+  - OnStateUpdate: false
+  - OnRateChanged: false
+  - OnAction: false
+  - OnModeChanged: false
+
+dataport :
+  - name : mic
+    flow : in
+    type : RTC::TimedOctetSeq
+    description : 音声データを入力
+  - name : angle
+    flow : in
+    type : RTC::TimedDouble
+    description : 音源方向角度データを入力(deg)
+  - name : result
+    flow : out
+    type : RTC::TimedOctetSeq
+    description : 音声データ出力
+
+serviceport : []
+
+configuration :
+  - name : SampleRate
+    type : int
+    defaultValue : 16000
+    constraints : x >=1
+    description : 入力音声データのサンプリング周波数(Hz)
+  - name : ConstAngle
+    type : int
+    defaultValue : 0
+    constraints : 0 <= x <360
+    description : 固定角度モードにおけるビームを向ける角度の設定 (deg)
+  - name : Mode
+    type : string
+    defaultValue : Const
+    constraints : Const, Variable
+    description : ビームを固定角度に向けるか可変角度に向けるかの設定
+  - name : ChannelNumbers
+    type : int
+    defaultValue : 8
+    constraints : x >= 2
+    description : 入力する音声データのチャンネル数
+    

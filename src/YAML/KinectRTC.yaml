@@ -1,0 +1,78 @@
+name : KinectRTC
+version: 2.0.0
+vendor: AIST
+max_instances: 1
+executionType: PeriodicExecutionContext
+executionRate: 1.0
+description: Kinect RTC
+category: OpenHRI
+componentKind: DataFlowComponent
+activityType: PERIODIC
+componentType: STATIC 
+maintainer: Isao Hara
+author: Isao Hara(isao-hara@aist.go.jp)
+
+actions:
+  - OnInitialize: true
+  - OnFinalize: true
+  - OnStartup: false
+  - OnShutdown: false
+  - OnActivated: true
+  - OnDeactivated: true
+  - OnAborting: false
+  - OnError: false
+  - OnReset: false
+  - OnExecute: true
+  - OnStateUpdate: false
+  - OnRateChanged: false
+  - OnAction: false
+  - OnModeChanged: false
+
+dataport :
+  - name : command
+    flow : in
+    type : RTC::TimedString
+    description : コマンド入力(未実装)
+  - name : audio_signal
+    flow : out
+    type : RTC::TimedOctetSeq
+    description : 音声データ(16KHz,16bits)対応ポート：JuliusRTC.data
+  - name : sound_src_angle
+    flow : out
+    type : RTC::TimedDouble
+    description : 音源の方向(Radian)
+  - name : rawImage
+    flow : out
+    type : RTC::TimedOctetSeq
+    description : カラー画像または深度画像(Configurationで設定)対応ポート：CvMonitor.rawImage
+  - name : tracking
+    flow : out
+    type : RTC::TimedShortSeq
+    description : 姿勢データ(表示用の座標、データ長：20)、深度画像取得を設定時のみ。対応ポート：CvMonitor.points
+  - name : skeleton
+    flow : out
+    type : RTC::TimedFloatSeq
+    description : 姿勢データ(ロボット操作用、データ長:21)、深度画像取得を設定時のみ。対応ポート：Skelton2JointAngle.skeleton, RobotMotion.skeleton
+
+configuration :
+  - name : max_angle
+    type : int
+    defaultValue : 0.3
+    constraints : -0.9 <= x <= 0.9
+    description : 録音可能な音源の方向の上限（Kinectの正面を0とする)
+  - name : min_angle
+    type : int
+    defaultValue : -0.3
+    constraints : -0.9 <= x <= 0.9
+    description : 録音可能な音源の方向の下限（Kinectの正面を0とする)
+  - name : capture_mode
+    type : int
+    defaultValue : 2
+    constraints : 0,1,2
+    description : 0：画像取得なし、1：カラー画像取得、2：深度画像取得
+  - name : intval
+    type : int
+    defaultValue : 100
+    constraints : x >= 1
+    description : 画像取得のインターバル設定。ECが、音声取得の周期で動作するために、各周期で画像取得すると、音声取得に影響があるため。
+    
