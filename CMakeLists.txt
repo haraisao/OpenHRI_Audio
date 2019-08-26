@@ -1,15 +1,14 @@
+#
+#
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 
-project(OpenHRIAudio)
-SUBDIRS(cmake_files)
-set(SolutionDir ${PROJECT_SOURCE_DIR})
+cmake_policy(SET CMP0048 NEW)
+cmake_policy(SET CMP0077 NEW)
 
-set(PACKAGE "${project}")
-SET(LOCALEDIR "${CMAKE_INSTALL_PREFIX}/share")
+project(OpenHRIAudio VERSION "2.0.0")
 
-set(CMAKE_CXX_STANDARD 11)
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(NO_INFO True)
+get_filename_component(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_LIST_DIR}/Components" ABSOLUTE)
 
-IF(NOT EXISTS "${SolutionDir}/bin")
-  file(MAKE_DIRECTORY "${SolutionDir}/bin")
-ENDIF(NOT EXISTS "${SolutionDir}/bin")
+set(INSTALL_LOCAL False)
+add_subdirectory(src)

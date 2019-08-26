@@ -33,6 +33,7 @@ dataport :
     flow : in
     type : RTC::TimedOctetSeq
     description : 保存する音声データを入力
+    datalistener: WabRecord
 
 configuration :
   - name : SampleRate

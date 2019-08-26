@@ -3,7 +3,7 @@
 #
 cmake_minimum_required(VERSION 3.0.2)
 
-project(PortAudioOutput)
+project(WavRecord)
 
 option(STATIC_LIBS "Build static libraries" OFF)
 option(INSTALL_LOCAL "Install local directory" OFF)
@@ -11,7 +11,7 @@ option(INSTALL_LOCAL "Install local directory" OFF)
 find_package(OpenRTM REQUIRED)
 
 string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)
-set(PROJECT_VERSION 2.0.0 CACHE STRING "PortAudioOutput version")
+set(PROJECT_VERSION 2.0.0 CACHE STRING "WavRecord version")
 set(PROJECT_TYPE "c++/OpenHRI")
 
 # Add an "uninstall" target
@@ -38,14 +38,14 @@ RewriteBuildOptions()
 #
 #
 set(rtc_headers
-  include/PortAudioOutput.h
+  include/WavRecord.h
 )
 
 set(rtc_srcs
-    src/PortAudioOutput.cpp
+    src/WavRecord.cpp
 )
 
-set(rtc_exec_src src/PortAudioOutputComp.cpp)
+set(rtc_exec_src src/WavRecordComp.cpp)
 
 include_directories(
   ${PROJECT_SOURCE_DIR}/include
@@ -58,9 +58,9 @@ link_directories(${OPENRTM_LIBRARY_DIRS})
 
 #############
 #  3rdPary Libs
-find_package(portaudio REQUIRED)
-include_directories(${PORTAUDIO_INCLUDE_DIR})
-set(OPTION_LIBRARIES ${PORTAUDIO_LIBRARIES})
+find_package(libsndfile REQUIRED)
+include_directories(${SNDFILE_INCLUDE_DIR})
+set(OPTION_LIBRARIES ${SNDFILE_LIBRARIES})
 
 #############
 #  RTC
@@ -86,7 +86,9 @@ install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}Comp
     ARCHIVE DESTINATION lib COMPONENT componenet
  )
 
-install(FILES ${PORTAUDIO_RUNTIME} DESTINATION bin)
+#
+#  install 3rdpary runtime libraries
+install(FILES ${SNDFILE_RUNTIME} DESTINATION bin)
 
 ####################
 # Package creation

@@ -6,6 +6,7 @@ cmake_minimum_required(VERSION 3.0.2)
 project(WavPlayer)
 
 option(STATIC_LIBS "Build static libraries" OFF)
+option(INSTALL_LOCAL "Install local directory" OFF)
 
 find_package(OpenRTM REQUIRED)
 
@@ -16,7 +17,9 @@ set(PROJECT_TYPE "c++/OpenHRI")
 # Add an "uninstall" target
 AddUninstallTarget()
 
-get_filename_component(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_LIST_DIR}/../Components" ABSOLUTE)
+if (INSTALL_LOCAL)
+   get_filename_component(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_LIST_DIR}/../Components" ABSOLUTE)
+endif()
 RewriteBuildOptions()
 
 ##############
@@ -75,7 +78,7 @@ add_rtc_executable(${PROJECT_NAME}Comp ${RTC_EXEC_SOURCES})
 #############
 # Install
 #############
-message("--- ${CMAKE_INSTALL_PREFIX}")
+message("--- INSTALL_PREFIX: ${CMAKE_INSTALL_PREFIX}")
 install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}Comp
     EXPORT ${PROJECT_NAME}
     RUNTIME DESTINATION bin COMPONENT componenet
