@@ -33,6 +33,7 @@ dataport :
     flow : in
     type : RTC::TimedOctetSeq
     description : 音声データ入力
+    datalistener: AudioDataIn
   - name : AudioDataOut
     flow : out
     type : RTC::TimedLong
@@ -57,8 +58,8 @@ configuration :
     constraints : x >= 0
     description : ゲイン調整パラメータ
   - name : InputChannelNumbers
-    type : 1
-    defaultValue : int
+    type : int
+    defaultValue : 1
     constraints : x >= 1
     description : 出力する音声データのチャンネル数設定
     
