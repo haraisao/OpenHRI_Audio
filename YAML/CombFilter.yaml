@@ -33,6 +33,7 @@ dataport :
     flow : in
     type : RTC::TimedOctetSeq
     description : 音声データを入力
+    datalistener : AudioData
   - name : AudioDataOut
     flow : out
     type : RTC::TimedOctetSeq

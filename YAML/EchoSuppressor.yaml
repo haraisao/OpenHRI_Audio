@@ -33,10 +33,12 @@ dataport :
     flow : in
     type : RTC::TimedOctetSeq
     description : マイクから取得された音声データを入力
+    datalistener : AudioIn
   - name : ReferenceAudioDataIn
     flow : in
     type : RTC::TimedOctetSeq
     description : 音声出力コンポーネントからの音声データ（除去対象のエコー音声データ）を入力
+    datalistener : ReferenceAudio
   - name : AudioDataOut
     flow : out
     type : RTC::TimedOctetSeq

@@ -33,10 +33,12 @@ dataport :
     flow : in
     type : RTC::TimedOctetSeq
     description : マイクから取得された音声データを入力
+    datalistener : MicAudio
   - name : micReferenceAudioDataIn
     flow : in
     type : RTC::TimedOctetSeq
     description : 音声出力コンポーネント等からのミキシングする音声データを入力
+    datalistener: MicReference
   - name : micAudioDataOut
     flow : out
     type : RTC::TimedOctetSeq
