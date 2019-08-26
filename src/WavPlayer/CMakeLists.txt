@@ -2,6 +2,7 @@
 #
 #
 cmake_minimum_required(VERSION 3.0.2)
+cmake_policy(SET CMP0077 NEW)
 
 project(WavPlayer)
 

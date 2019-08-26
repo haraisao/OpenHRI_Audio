@@ -2,17 +2,20 @@
 #
 #
 cmake_minimum_required(VERSION 3.0.2)
+cmake_policy(SET CMP0077 NEW)
 
 project(WavRecord)
 
 option(STATIC_LIBS "Build static libraries" OFF)
 option(INSTALL_LOCAL "Install local directory" OFF)
 
-find_package(OpenRTM REQUIRED)
+
 
 string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)
 set(PROJECT_VERSION 2.0.0 CACHE STRING "WavRecord version")
 set(PROJECT_TYPE "c++/OpenHRI")
+
+find_package(OpenRTM REQUIRED)
 
 # Add an "uninstall" target
 AddUninstallTarget()
