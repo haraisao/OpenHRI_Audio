@@ -1,6 +1,14 @@
 #
 #
 add_subdirectory(AutoGainControl)
+add_subdirectory(BeamForming)
+add_subdirectory(ChannelSelector)
+add_subdirectory(CombFilter)
+add_subdirectory(DSArray)
+add_subdirectory(EchoCanceler)
+add_subdirectory(EchoSuppressor)
+add_subdirectory(Gate)
+add_subdirectory(Mixer)
 add_subdirectory(PortAudioInput)
 add_subdirectory(PortAudioOutput)
 add_subdirectory(SamplingRateConverter)

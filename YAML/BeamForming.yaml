@@ -52,7 +52,7 @@ configuration :
     constraints : x >=1
     description : 入力音声データのサンプリング周波数(Hz)
   - name : ConstAngle
-    type : int
+    type : double
     defaultValue : 0
     constraints : 0 <= x <360
     description : 固定角度モードにおけるビームを向ける角度の設定 (deg)

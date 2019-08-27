@@ -1,6 +1,6 @@
 // -*- C++ -*-
 /*!
- * @file  BeamForming.h
+ * @file  Mixer.h
  * @author Isao Hara(isao-hara@aist.go.jp)
  *
  * Copyright (C) 
@@ -8,8 +8,8 @@
  *
  */
 
-#ifndef _BeamForming_H_
-#define _BeamForming_H_
+#ifndef _Mixer_H_
+#define _Mixer_H_
 
 #include <iostream>
 #include <string>
@@ -50,46 +50,30 @@
 
 // </rtc-template>
 
-typedef struct mic_info {
-  double x,y,z;
-  double xy_rad,yz_rad;
-  int dt;
-  bool used;
-}mic_info;
-
-struct delay_rank {
-  int mic_num,trigger_cnt;
-};
-
 using namespace RTC;
-
-#ifndef M_PI
-#define M_PI 3.14159265358979
-#endif
-#define SONIC 340.29
-#define SEND_LENGTH 1024
+#define BUFFER_MAX 262144
 
 /*!
- * @class BeamForming
+ * @class Mixer
  * @brief Periodic Console Out Component
  *
  */
-class BeamForming
+class Mixer
   : public RTC::DataFlowComponentBase
 {
  public:
-  void RcvBuffer(RTC::TimedOctetSeq data);
-  void RcvAngle(RTC::TimedOctetSeq data);
+  void RcvInBuffer(RTC::TimedOctetSeq data);
+  void RcvOutBuffer(RTC::TimedOctetSeq data);
   /*!
    * @brief constructor
    * @param manager Maneger Object
    */
-  BeamForming(RTC::Manager* manager);
+  Mixer(RTC::Manager* manager);
 
   /*!
    * @brief destructor
    */
-  ~BeamForming();
+  ~Mixer();
 
   // <rtc-template block="public_attribute">
 
@@ -145,14 +129,14 @@ class BeamForming
   // DataPort declaration
   // <rtc-template block="dataport_declare">
 
-  RTC::TimedOctetSeq m_mic;
-  InPort<RTC::TimedOctetSeq> m_micIn;
+  RTC::TimedOctetSeq m_micAudioDataIn;
+  InPort<RTC::TimedOctetSeq> m_micAudioDataInIn;
 
-  RTC::TimedDouble m_angle;
-  InPort<RTC::TimedDouble> m_angleIn;
+  RTC::TimedOctetSeq m_micReferenceAudioDataIn;
+  InPort<RTC::TimedOctetSeq> m_micReferenceAudioDataInIn;
 
-  RTC::TimedOctetSeq m_result;
-  OutPort<RTC::TimedOctetSeq> m_resultOut;
+  RTC::TimedOctetSeq m_micAudioDataOut;
+  OutPort<RTC::TimedOctetSeq> m_micAudioDataOutOut;
 
 
 
@@ -175,18 +159,16 @@ class BeamForming
 
  private:
   void BufferClr(void);
-  void DelayFunc(void);
-  mic_info *m_micinfo;
   bool is_active;
-  bool m_horizon;
 
+  std::list<short> m_indata; //!< receive buffer queue
+  std::list<short> m_outdata; //!< receive buffer queue
+  int m_err;  
   // <rtc-template block="private_attribute">
   coil::Mutex m_mutex;
   
-  int m_SampleRate;
-  double m_ConstAngle;
-  std::string m_Mode;
-  int m_ChannelNumbers;
+  int m_OutputChannelNumbers;
+  std::vector<double> m_MixGains;
 
 
   // </rtc-template>
@@ -202,7 +184,7 @@ class BeamForming
  * @class DataListener
  * @brief
  */
-class MicDataListener
+class MicAudioDataListener
   : public ConnectorDataListenerT<RTC::TimedOctetSeq>
 {
   USE_CONNLISTENER_STATUS;
@@ -210,23 +192,56 @@ public:
   /*!
    * @brief constructor
    */
-  MicDataListener(const char* name, BeamForming *data) : m_name(name), m_obj(data){};
+  MicAudioDataListener(const char* name, Mixer *data) : m_name(name), m_obj(data){};
 
   /*!
    * @brief destructor
    */
-  virtual ~MicDataListener(){};
+  virtual ~MicAudioDataListener(){};
 
   virtual ReturnCode operator()( ConnectorInfo& info,
                                  RTC::TimedOctetSeq& data){
     if ( m_name == "ON_BUFFER_WRITE" ) {
      /* onBufferWrite */
-     m_obj->RcvBuffer(data);
+     m_obj->RcvInBuffer(data);
     }
     return NO_CHANGE;
   };
 
-  BeamForming *m_obj;
+  Mixer *m_obj;
+  std::string m_name;
+};
+
+
+/*!
+ * @class DataListener
+ * @brief
+ */
+class MicReferenceDataListener
+  : public ConnectorDataListenerT<RTC::TimedOctetSeq>
+{
+  USE_CONNLISTENER_STATUS;
+public:
+  /*!
+   * @brief constructor
+   */
+  MicReferenceDataListener(const char* name, Mixer *data) : m_name(name), m_obj(data){};
+
+  /*!
+   * @brief destructor
+   */
+  virtual ~MicReferenceDataListener(){};
+
+  virtual ReturnCode operator()( ConnectorInfo& info,
+                                 RTC::TimedOctetSeq& data){
+    if ( m_name == "ON_BUFFER_WRITE" ) {
+     /* onBufferWrite */
+     m_obj->RcvOutBuffer(data);
+    }
+    return NO_CHANGE;
+  };
+
+  Mixer *m_obj;
   std::string m_name;
 };
 
@@ -235,12 +250,12 @@ public:
 extern "C"
 {
   /*!
-   * @brief BeamForming initialize
+   * @brief Mixer initialize
    *
    * @param manager Maneger Object
    */
-  DLL_EXPORT void BeamFormingInit(RTC::Manager* manager);
+  DLL_EXPORT void MixerInit(RTC::Manager* manager);
 };
 
 
-#endif // _BeamForming_H_
+#endif // _Mixer_H_

@@ -1,6 +1,6 @@
 // -*- C++ -*-
 /*!
- * @file  BeamForming.h
+ * @file  DSArray.h
  * @author Isao Hara(isao-hara@aist.go.jp)
  *
  * Copyright (C) 
@@ -8,8 +8,8 @@
  *
  */
 
-#ifndef _BeamForming_H_
-#define _BeamForming_H_
+#ifndef _DSArray_H_
+#define _DSArray_H_
 
 #include <iostream>
 #include <string>
@@ -21,7 +21,7 @@
 /*
  insert include files for 3rd party libs
 */
-
+#include "windowing.h"
 /*
   Data Types
 */
@@ -50,46 +50,40 @@
 
 // </rtc-template>
 
-typedef struct mic_info {
+struct mic_info {
   double x,y,z;
   double xy_rad,yz_rad;
-  int dt;
-  bool used;
-}mic_info;
+};
 
 struct delay_rank {
   int mic_num,trigger_cnt;
 };
 
 using namespace RTC;
-
-#ifndef M_PI
-#define M_PI 3.14159265358979
-#endif
 #define SONIC 340.29
-#define SEND_LENGTH 1024
+#define WINLEN 2048
+#define SEARCHMAX 100
 
 /*!
- * @class BeamForming
+ * @class DSArray
  * @brief Periodic Console Out Component
  *
  */
-class BeamForming
+class DSArray
   : public RTC::DataFlowComponentBase
 {
  public:
   void RcvBuffer(RTC::TimedOctetSeq data);
-  void RcvAngle(RTC::TimedOctetSeq data);
   /*!
    * @brief constructor
    * @param manager Maneger Object
    */
-  BeamForming(RTC::Manager* manager);
+  DSArray(RTC::Manager* manager);
 
   /*!
    * @brief destructor
    */
-  ~BeamForming();
+  ~DSArray();
 
   // <rtc-template block="public_attribute">
 
@@ -148,11 +142,8 @@ class BeamForming
   RTC::TimedOctetSeq m_mic;
   InPort<RTC::TimedOctetSeq> m_micIn;
 
-  RTC::TimedDouble m_angle;
-  InPort<RTC::TimedDouble> m_angleIn;
-
-  RTC::TimedOctetSeq m_result;
-  OutPort<RTC::TimedOctetSeq> m_resultOut;
+  RTC::TimedDouble m_result;
+  OutPort<RTC::TimedDouble> m_resultOut;
 
 
 
@@ -175,17 +166,22 @@ class BeamForming
 
  private:
   void BufferClr(void);
-  void DelayFunc(void);
-  mic_info *m_micinfo;
+  std::list<short> m_data; //!< receive buffer queue
+
+  mic_info* m_micinfo;
+  void *fft;
+  float *window;
   bool is_active;
   bool m_horizon;
+  // </rtc-template>
 
+  // <rtc-template block="private_operation">
+  int ccf(short *base, short *data);
+  int CrossCorrelation(short *base, short *data);
   // <rtc-template block="private_attribute">
   coil::Mutex m_mutex;
   
   int m_SampleRate;
-  double m_ConstAngle;
-  std::string m_Mode;
   int m_ChannelNumbers;
 
 
@@ -210,7 +206,7 @@ public:
   /*!
    * @brief constructor
    */
-  MicDataListener(const char* name, BeamForming *data) : m_name(name), m_obj(data){};
+  MicDataListener(const char* name, DSArray *data) : m_name(name), m_obj(data){};
 
   /*!
    * @brief destructor
@@ -221,12 +217,12 @@ public:
                                  RTC::TimedOctetSeq& data){
     if ( m_name == "ON_BUFFER_WRITE" ) {
      /* onBufferWrite */
-     m_obj->RcvBuffer(data);
+      m_obj->RcvBuffer(data);
     }
     return NO_CHANGE;
   };
 
-  BeamForming *m_obj;
+  DSArray *m_obj;
   std::string m_name;
 };
 
@@ -235,12 +231,12 @@ public:
 extern "C"
 {
   /*!
-   * @brief BeamForming initialize
+   * @brief DSArray initialize
    *
    * @param manager Maneger Object
    */
-  DLL_EXPORT void BeamFormingInit(RTC::Manager* manager);
+  DLL_EXPORT void DSArrayInit(RTC::Manager* manager);
 };
 
 
-#endif // _BeamForming_H_
+#endif // _DSArray_H_

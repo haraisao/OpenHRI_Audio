@@ -1,6 +1,6 @@
 // -*- C++ -*-
 /*!
- * @file  BeamForming.h
+ * @file  ChannelSelector.h
  * @author Isao Hara(isao-hara@aist.go.jp)
  *
  * Copyright (C) 
@@ -8,8 +8,8 @@
  *
  */
 
-#ifndef _BeamForming_H_
-#define _BeamForming_H_
+#ifndef _ChannelSelector_H_
+#define _ChannelSelector_H_
 
 #include <iostream>
 #include <string>
@@ -50,46 +50,28 @@
 
 // </rtc-template>
 
-typedef struct mic_info {
-  double x,y,z;
-  double xy_rad,yz_rad;
-  int dt;
-  bool used;
-}mic_info;
-
-struct delay_rank {
-  int mic_num,trigger_cnt;
-};
-
 using namespace RTC;
 
-#ifndef M_PI
-#define M_PI 3.14159265358979
-#endif
-#define SONIC 340.29
-#define SEND_LENGTH 1024
-
 /*!
- * @class BeamForming
+ * @class ChannelSelector
  * @brief Periodic Console Out Component
  *
  */
-class BeamForming
+class ChannelSelector
   : public RTC::DataFlowComponentBase
 {
  public:
-  void RcvBuffer(RTC::TimedOctetSeq data);
-  void RcvAngle(RTC::TimedOctetSeq data);
+  void RcvInBuffer(RTC::TimedOctetSeq data);
   /*!
    * @brief constructor
    * @param manager Maneger Object
    */
-  BeamForming(RTC::Manager* manager);
+  ChannelSelector(RTC::Manager* manager);
 
   /*!
    * @brief destructor
    */
-  ~BeamForming();
+  ~ChannelSelector();
 
   // <rtc-template block="public_attribute">
 
@@ -145,14 +127,11 @@ class BeamForming
   // DataPort declaration
   // <rtc-template block="dataport_declare">
 
-  RTC::TimedOctetSeq m_mic;
-  InPort<RTC::TimedOctetSeq> m_micIn;
+  RTC::TimedOctetSeq m_AudioDataIn;
+  InPort<RTC::TimedOctetSeq> m_AudioDataInIn;
 
-  RTC::TimedDouble m_angle;
-  InPort<RTC::TimedDouble> m_angleIn;
-
-  RTC::TimedOctetSeq m_result;
-  OutPort<RTC::TimedOctetSeq> m_resultOut;
+  RTC::TimedOctetSeq m_AudioDataOut;
+  OutPort<RTC::TimedOctetSeq> m_AudioDataOutOut;
 
 
 
@@ -174,19 +153,16 @@ class BeamForming
   // </rtc-template>
 
  private:
-  void BufferClr(void);
-  void DelayFunc(void);
-  mic_info *m_micinfo;
   bool is_active;
-  bool m_horizon;
+   int m_bytesize;
 
   // <rtc-template block="private_attribute">
   coil::Mutex m_mutex;
   
-  int m_SampleRate;
-  double m_ConstAngle;
-  std::string m_Mode;
-  int m_ChannelNumbers;
+  int m_InputChannelNumbbers;
+  int m_SelectOutputChannel;
+  std::string m_InputSampleByte;
+  std::string m_ReverseEndian;
 
 
   // </rtc-template>
@@ -202,7 +178,7 @@ class BeamForming
  * @class DataListener
  * @brief
  */
-class MicDataListener
+class AudioDataDataListener
   : public ConnectorDataListenerT<RTC::TimedOctetSeq>
 {
   USE_CONNLISTENER_STATUS;
@@ -210,23 +186,23 @@ public:
   /*!
    * @brief constructor
    */
-  MicDataListener(const char* name, BeamForming *data) : m_name(name), m_obj(data){};
+  AudioDataDataListener(const char* name, ChannelSelector *data) : m_name(name), m_obj(data){};
 
   /*!
    * @brief destructor
    */
-  virtual ~MicDataListener(){};
+  virtual ~AudioDataDataListener(){};
 
   virtual ReturnCode operator()( ConnectorInfo& info,
                                  RTC::TimedOctetSeq& data){
     if ( m_name == "ON_BUFFER_WRITE" ) {
      /* onBufferWrite */
-     m_obj->RcvBuffer(data);
+      m_obj->RcvInBuffer(data);
     }
     return NO_CHANGE;
   };
 
-  BeamForming *m_obj;
+  ChannelSelector *m_obj;
   std::string m_name;
 };
 
@@ -235,12 +211,12 @@ public:
 extern "C"
 {
   /*!
-   * @brief BeamForming initialize
+   * @brief ChannelSelector initialize
    *
    * @param manager Maneger Object
    */
-  DLL_EXPORT void BeamFormingInit(RTC::Manager* manager);
+  DLL_EXPORT void ChannelSelectorInit(RTC::Manager* manager);
 };
 
 
-#endif // _BeamForming_H_
+#endif // _ChannelSelector_H_
