@@ -21,7 +21,8 @@
 /*
  insert include files for 3rd party libs
 */
-
+#include <pulse/pulseaudio.h>
+#include <pulse/simple.h>
 /*
   Data Types
 */
@@ -49,6 +50,17 @@
 // <rtc-template block="consumer_stub_h">
 
 // </rtc-template>
+struct simple_recast {
+    pa_threaded_mainloop *mainloop;
+    pa_context *context;
+    pa_stream *stream;
+    pa_stream_direction_t direction;
+
+    const void *read_data;
+    size_t read_index, read_length;
+
+    int operation_success;
+};
 
 using namespace RTC;
 
@@ -61,7 +73,7 @@ class PulseAudioOutput
   : public RTC::DataFlowComponentBase
 {
  public:
-
+  void RcvBuffer(RTC::TimedOctetSeq data);
   /*!
    * @brief constructor
    * @param manager Maneger Object
@@ -153,7 +165,18 @@ class PulseAudioOutput
   // </rtc-template>
 
  private:
+  RTC::ReturnCode_t WriteBuffer(void);
+  pa_sample_format getFormat(std::string str);
 
+  bool is_active;
+
+  pa_sample_spec m_spec;            //!< sample spec (sample rate, format, channels)
+  pa_buffer_attr m_bufferattr;      //!< buffer attributes (length)
+  pa_simple *m_simple;              //!< PulseAudio Simple Connection Object
+
+  std::list<unsigned char> m_data; //!< receive buffer queue
+  int m_err;                        //!< Error codes returned by PulsetAudio functions
+  bool m_writezero;
   // <rtc-template block="private_attribute">
   coil::Mutex m_mutex;
   
@@ -169,6 +192,39 @@ class PulseAudioOutput
 
   // </rtc-template>
 
+};
+
+
+/*!
+ * @class DataListener
+ * @brief
+ */
+class AudioInDataListener
+  : public ConnectorDataListenerT<RTC::TimedOctetSeq>
+{
+  USE_CONNLISTENER_STATUS;
+public:
+  /*!
+   * @brief constructor
+   */
+  AudioInDataListener(const char* name, PulseAudioOutput *data) : m_name(name), m_obj(data){};
+
+  /*!
+   * @brief destructor
+   */
+  virtual ~AudioInDataListener(){};
+
+  virtual ReturnCode operator()( ConnectorInfo& info,
+                                 RTC::TimedOctetSeq& data){
+    if ( m_name == "ON_BUFFER_WRITE" ) {
+     /* onBufferWrite */
+      m_obj->RcvBuffer(data);
+    }
+    return NO_CHANGE;
+  };
+
+  PulseAudioOutput *m_obj;
+  std::string m_name;
 };
 
 

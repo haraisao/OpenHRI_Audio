@@ -33,10 +33,12 @@ dataport :
     flow : in
     type : RTC::TimedLong
     description : オートゲインコントロール用のゲインデータ
+    datalistener : GainData
   - name : AudioDataOut
     flow : out
     type : RTC::TimedOctetSeq
     description : 録音した音声データ
+
 
 serviceporr : []
 

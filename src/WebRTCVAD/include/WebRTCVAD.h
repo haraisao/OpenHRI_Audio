@@ -21,7 +21,7 @@
 /*
  insert include files for 3rd party libs
 */
-
+#include "webrtc_vad.h"
 /*
   Data Types
 */
@@ -51,7 +51,7 @@
 // </rtc-template>
 
 using namespace RTC;
-
+#define WINLEN 480
 /*!
  * @class WebRTCVAD
  * @brief Periodic Console Out Component
@@ -61,7 +61,7 @@ class WebRTCVAD
   : public RTC::DataFlowComponentBase
 {
  public:
-
+  void RcvInBuffer(RTC::TimedOctetSeq data);
   /*!
    * @brief constructor
    * @param manager Maneger Object
@@ -153,6 +153,12 @@ class WebRTCVAD
   // </rtc-template>
 
  private:
+  bool is_active;
+
+  std::list<short> m_inbuffer; //!< receive buffer queue
+  VadInst* handle;
+  std::list<WebRtc_Word16> m_filterflagbuffer;
+  std::list<WebRtc_Word16*> m_filterdatabuffer;
 
   // <rtc-template block="private_attribute">
   coil::Mutex m_mutex;
@@ -192,6 +198,7 @@ public:
                                  RTC::TimedOctetSeq& data){
     if ( m_name == "ON_BUFFER_WRITE" ) {
      /* onBufferWrite */
+      m_obj->RcvInBuffer(data);
     }
     return NO_CHANGE;
   };

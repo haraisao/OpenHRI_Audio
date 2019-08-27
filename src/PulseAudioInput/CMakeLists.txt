@@ -59,10 +59,9 @@ link_directories(${OPENRTM_LIBRARY_DIRS})
 
 #############
 #  3rdPary Libs
-#find_package(libsndfile REQUIRED)
-#include_directories(${SNDFILE_INCLUDE_DIR})
-#set(OPTION_LIBRARIES ${SNDFILE_LIBRARIES})
-set(OPTION_LIBRARIES)
+find_package(pulseaudio REQUIRED)
+include_directories(${PULSEAUDIO_INCLUDE_DIR})
+set(OPTION_LIBRARIES ${PULSEAUDIO_LIBRARIES})
 
 #############
 #  RTC

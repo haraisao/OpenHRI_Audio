@@ -21,6 +21,12 @@
 /*
  insert include files for 3rd party libs
 */
+#include <pulse/pulseaudio.h>
+#include <pulse/simple.h>
+#include <pulse/context.h>
+#include <pulse/version.h>
+#include <pulse/volume.h>
+#include <pulse/channelmap.h>
 
 /*
   Data Types
@@ -61,7 +67,7 @@ class PulseAudioInput
   : public RTC::DataFlowComponentBase
 {
  public:
-
+  void RcvBuffer(RTC::TimedOctetSeq data);
   /*!
    * @brief constructor
    * @param manager Maneger Object
@@ -153,7 +159,16 @@ class PulseAudioInput
   // </rtc-template>
 
  private:
+  pa_sample_format getFormat(std::string str);
 
+  bool is_active;
+  bool syncflg;
+  pa_cvolume *mp_vol;
+  pa_sample_spec m_spec;       //!< sample spec (sample rate, format, channels)
+  pa_simple *m_simple;         //!< PulseAudio Simple Connection Object
+  std::list<unsigned char> m_data; //!< receive buffer queue
+  unsigned long m_totalframes; //!< Max frames to buffer size
+  int m_err;    
   // <rtc-template block="private_attribute">
   coil::Mutex m_mutex;
   
@@ -168,6 +183,39 @@ class PulseAudioInput
 
   // </rtc-template>
 
+};
+
+
+/*!
+ * @class DataListener
+ * @brief
+ */
+class GainDataDataListener
+  : public ConnectorDataListenerT<RTC::TimedLong>
+{
+  USE_CONNLISTENER_STATUS;
+public:
+  /*!
+   * @brief constructor
+   */
+  GainDataDataListener(const char* name, PulseAudioInput *data) : m_name(name), m_obj(data){};
+
+  /*!
+   * @brief destructor
+   */
+  virtual ~GainDataDataListener(){};
+
+  virtual ReturnCode operator()( ConnectorInfo& info,
+                                 RTC::TimedLong& data){
+    if ( m_name == "ON_BUFFER_WRITE" ) {
+     /* onBufferWrite */
+      m_obj->SetGain(data.data);
+    }
+    return NO_CHANGE;
+  };
+
+  PulseAudioInput *m_obj;
+  std::string m_name;
 };
 
 
