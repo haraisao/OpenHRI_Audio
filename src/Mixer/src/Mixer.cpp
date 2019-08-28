@@ -21,7 +21,7 @@ std::istream& operator>>(std::istream& is, std::vector<T>& v)
   is >> s;
   sv = coil::split(s ,",");
   v.resize(sv.size());
-  for (int i(0), len(sv.size()); i < len; ++i) {
+  for (int i(0), len((int)sv.size()); i < len; ++i) {
     T tv;
     if (coil::stringTo(tv, sv[i].c_str())) {
       v[i] = tv;
@@ -146,6 +146,7 @@ RTC::ReturnCode_t Mixer::onActivated(RTC::UniqueId ec_id)
   is_active = true;
   BufferClr();
   RTC_DEBUG(("onActivated finish"));
+  return RTC::RTC_OK;
 }
 
 
@@ -256,7 +257,7 @@ RTC::ReturnCode_t Mixer::onExecute(RTC::UniqueId ec_id)
   if (!m_indata.empty() && !m_outdata.empty()) {
     m_mutex.lock();
     RTC_DEBUG(("onExecute:mutex lock"));
-    int num = (m_indata.size() < m_outdata.size()) ? m_indata.size() : m_outdata.size();
+    int num = (m_indata.size() < m_outdata.size()) ? (int)m_indata.size() : (int)m_outdata.size();
     double *buffer;
     buffer = new double[num * m_OutputChannelNumbers];
     int cnt = 0;
@@ -274,7 +275,7 @@ RTC::ReturnCode_t Mixer::onExecute(RTC::UniqueId ec_id)
     RTC_DEBUG(("onExecute:mutex unlock"));
     m_micAudioDataOut.data.length(num * m_OutputChannelNumbers * 2);  //!< set outport data length
     for ( int i = 0; i < num * m_OutputChannelNumbers; i++ ) {
-      short val = buffer[i];
+      short val = (short)buffer[i];
       m_micAudioDataOut.data[i*2]   = (unsigned char)(val & 0x00ff);
       m_micAudioDataOut.data[i*2+1] = (unsigned char)((val & 0xff00) >> 8);
     }

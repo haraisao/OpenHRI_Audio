@@ -239,7 +239,7 @@ RTC::ReturnCode_t AutoGainControl::onExecute(RTC::UniqueId ec_id)
   RTC_DEBUG(("onExecute start"));
   m_mutex.lock();
   RTC_DEBUG(("onExecute:mutex lock"));
-  m_AudioDataOut.data = m_gain;
+  m_AudioDataOut.data = (int)m_gain;
   setTimestamp( m_AudioDataOut );
   m_AudioDataOutOut.write();
   RTC_DEBUG(("AudioDataOut port:ON_BUFFER_WRITE"));

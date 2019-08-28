@@ -148,11 +148,11 @@ RTC::ReturnCode_t Gate::onExecute(RTC::UniqueId ec_id)
     m_AudioDataInIn.read();
     m_AudioDataOut.data.length(m_AudioDataIn.data.length());
     if (is_gated == false) {
-      for (i = 0; i < m_AudioDataIn.data.length(); i++) {
+      for (i = 0; i < (int)m_AudioDataIn.data.length(); i++) {
         m_AudioDataOut.data[i] = m_AudioDataIn.data[i];
       }
     } else {
-      for (i = 0; i < m_AudioDataIn.data.length() / 2; i++) {
+      for (i = 0; i < (int)m_AudioDataIn.data.length() / 2; i++) {
         m_AudioDataOut.data[2*i] = i % 2; // avoid julius zero stripping problem
         m_AudioDataOut.data[2*i+1] = 0;
       }

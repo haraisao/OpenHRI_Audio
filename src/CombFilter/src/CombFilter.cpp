@@ -215,7 +215,7 @@ RTC::ReturnCode_t CombFilter::onExecute(RTC::UniqueId ec_id)
   m_mutex.lock();
   RTC_DEBUG(("onExecute:mutex lock"));
   int delay = (int)( m_SampleRate / m_Frequency );
-  int num = m_queue.size();
+  int num = (int)m_queue.size();
   if ( num > delay ) {
     int i,j;
     short *buffer = new short[num];

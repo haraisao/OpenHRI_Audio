@@ -206,7 +206,7 @@ long *SamplingRateConverter::InputDataSet(int *length)
   RTC_DEBUG(("Output data start"));
   unsigned char val[4];
   int i;
-  int size = m_queue.size();
+  int size = (int)m_queue.size();
   long *data;
 
   switch ( m_in_format ) {
@@ -280,7 +280,7 @@ float *SamplingRateConverter::InputDataSetFloat(int *length)
   RTC_DEBUG(("Output data start"));
   unsigned char val[4];
   int i;
-  int size = m_queue.size();
+  int size = (int)m_queue.size();
   float *data;
 
   switch ( m_in_format ) {
