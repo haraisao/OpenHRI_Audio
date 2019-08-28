@@ -64,7 +64,7 @@ link_directories(${OPENRTM_LIBRARY_DIRS})
 find_package(speex REQUIRED)
 include_directories(${SPEEX_INCLUDE_DIR})
 set(OPTION_LIBRARIES ${SPEEX_LIBRARIES})
-
+add_link_options(/LTCG /NODEFAULTLIB:LIBCMT)
 
 #############
 #  RTC
