@@ -1,0 +1,18 @@
+<package format="2">
+  <name>OpenHRIAudio</name>
+  <version>2.0.0</version>
+  <description>OpenHRI Audio components </description>
+  <maintainer email="isao-hara@aist.go.jp">Isao Hara</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">https://openrtc.org</url>
+
+  <author email="isao-hara@aist.go.jp">Isao Hara</author>
+
+  <depend>OpenRTM-aist</depend>
+  <depend>portaudio</depend>
+  <depend>libsndfile</depend>
+  <depend>libresample</depend>
+  <depend>speex-1.2.0</depend>
+</package>
