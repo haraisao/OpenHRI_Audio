@@ -13,26 +13,5 @@ get_filename_component(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_LIST_DIR}/Component
 set(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT False)
 
 set(INSTALL_LOCAL False)
-#add_subdirectory(src)
-
-macro(DecomposeRtmVersion)
-  string(REGEX REPLACE "^([0-9]+).*" "\\1"
-        OPENRTM_VERSION_MAJOR "${OPENRTM_VERSION}")
-  string(REGEX REPLACE "^[0-9]+\\.([0-9]+).*" "\\1"
-        OPENRTM_VERSION_MINOR "${OPENRTM_VERSION}")
-  string(REGEX REPLACE "^[0-9]+\\.[0-9]+\\.([0-9]+)" "\\1"
-        OPENRTM_VERSION_PATCH "${OPENRTM_VERSION}")
-  set(OPENRTM_SHORT_VERSION ${OPENRTM_VERSION_MAJOR}${OPENRTM_VERSION_MINOR}${OPENRTM_VERSION_PATCH})
-endmacro(DecomposeRtmVersion)
-
-message("==============")
-
-if (NOT OPENRTM_VERSION)
-  set(OPENRTM_VERSION 1.2.0)
-endif()
-DecomposeRtmVersion()
-message("==== ${OPENRTM_VERSION}")
-message("==== ${OPENRTM_VERSION_MAJOR}")
-message("==== ${OPENRTM_VERSION_MINOR}")
-message("==== ${OPENRTM_VERSION_PATCH}")
-message("==== ${OPENRTM_SHORT_VERSION}")
+set(UTF_8 True)
+add_subdirectory(src)
