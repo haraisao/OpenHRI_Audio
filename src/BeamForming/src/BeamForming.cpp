@@ -1,4 +1,4 @@
-// -*- C++ -*-
+﻿// -*- C++ -*-
 /*!
  * @file  BeamForming.cpp
  * @author Isao Hara(isao-hara@aist.go.jp)

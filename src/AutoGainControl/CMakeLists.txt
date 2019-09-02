@@ -84,9 +84,11 @@ message("--- ${CMAKE_INSTALL_PREFIX}")
 install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}Comp
     EXPORT ${PROJECT_NAME}
     RUNTIME DESTINATION bin COMPONENT componenet
-    LIBRARY DESTINATION lib COMPONENT componenet
-    ARCHIVE DESTINATION lib COMPONENT componenet
+#    LIBRARY DESTINATION lib COMPONENT componenet
+#    ARCHIVE DESTINATION lib COMPONENT componenet
  )
+
+gen_setup_bat()
 
 #
 #  install 3rdpary runtime libraries

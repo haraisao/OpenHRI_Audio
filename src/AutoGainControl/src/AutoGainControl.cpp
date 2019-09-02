@@ -1,4 +1,4 @@
-// -*- C++ -*-
+﻿// -*- C++ -*-
 /*!
  * @file  AutoGainControl.cpp
  * @author Isao Hara(isao-hara@aist.go.jp)

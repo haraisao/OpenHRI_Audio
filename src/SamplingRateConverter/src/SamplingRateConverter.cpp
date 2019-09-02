@@ -1,4 +1,4 @@
-// -*- C++ -*-
+﻿// -*- C++ -*-
 /*!
  * @file  SamplingRateConverter.cpp
  * @author Isao Hara(isao-hara@aist.go.jp)

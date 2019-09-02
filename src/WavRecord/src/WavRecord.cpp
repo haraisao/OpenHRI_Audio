@@ -1,4 +1,4 @@
-// -*- C++ -*-
+﻿// -*- C++ -*-
 /*!
  * @file  WavRecord.cpp
  * @author Isao Hara(isao-hara@aist.go.jp)
@@ -37,15 +37,14 @@ const char* rtcomponent_spec[] =
     "conf.default.SampleRate", "16000",
     "conf.__constraints__.SampleRate", "x >= 1",
     "conf.__type__.SampleRate", "int",
-    "conf.__description__.SampleRate", "入力される音声データのサンプリング周波数(Hz)",
+    "conf.__description__.SampleRate", "入力される音声データのサンプリング周波数(Hz) ",
     "conf.default.FileName", "wavrecord-default.wav",
     "conf.__type__.FileName", "string",
-    "conf.__description__.FileName", "録音したデータを保存するファイル名",
+    "conf.__description__.FileName", "録音したデータを保存するファイル名 ",
     "conf.default.ChannelNumbers", "1",
     "conf.__constraints__.ChannelNumbers", "x >= 1",
     "conf.__type__.ChannelNumbers", "int",
-    "conf.__description__.ChannelNumbers", "入力される音声データのチャンネル数",
-
+    "conf.__description__.ChannelNumbers", "入力される音声データのチャンネル数 ",
     ""
   };
 // </rtc-template>

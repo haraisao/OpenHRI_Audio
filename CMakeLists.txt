@@ -13,5 +13,5 @@ get_filename_component(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_LIST_DIR}/Component
 set(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT False)
 
 set(INSTALL_LOCAL False)
-set(UTF_8 True)
+#set(UTF_8 True)
 add_subdirectory(src)

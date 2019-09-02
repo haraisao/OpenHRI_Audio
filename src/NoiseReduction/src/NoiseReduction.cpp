@@ -1,4 +1,4 @@
-// -*- C++ -*-
+﻿// -*- C++ -*-
 /*!
  * @file  NoiseReduction.cpp
  * @author Isao Hara(isao-hara@aist.go.jp)
@@ -56,7 +56,7 @@ const char* rtcomponent_spec[] =
     "conf.default.ModeSelect", "premp",
     "conf.__constraints__.ModeSelect", "premp,deemp,bpf",
     "conf.__type__.ModeSelect", "string",
-    "conf.__description__.ModeSelect", "フィルタモード選択 「premp」=プリエンファシスモード、「deemp」=ディエンファシスモード、「bpf」=バンドパスフィルタモード",
+    "conf.__description__.ModeSelect", "フィルタモード選択 「premp」=プリエンファシスモード、「deemp」=ディエンファシスモード、「bpf」=バンドパスフィルタモード ",
 
     ""
   };
