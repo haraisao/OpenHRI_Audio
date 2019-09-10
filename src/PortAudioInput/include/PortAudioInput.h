@@ -39,6 +39,7 @@
   for RTC
 */
 #include <rtm/Manager.h>
+#include <rtm/ManagerConfig.h>
 #include <rtm/DataFlowComponentBase.h>
 #include <rtm/CorbaPort.h>
 #include <rtm/DataInPort.h>
