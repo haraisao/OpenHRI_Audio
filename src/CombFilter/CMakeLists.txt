@@ -46,7 +46,7 @@ set(rtc_srcs
     src/CombFilter.cpp
 )
 
-set(rtc_exec_src src/CombFilterComp.cpp)
+set(rtc_exec_src src/CombFilterComp.cpp src/utils.cpp)
 
 include_directories(
   ${PROJECT_SOURCE_DIR}/include

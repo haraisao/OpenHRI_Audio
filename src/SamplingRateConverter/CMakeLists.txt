@@ -45,7 +45,7 @@ set(rtc_srcs
     src/SamplingRateConverter.cpp
 )
 
-set(rtc_exec_src src/SamplingRateConverterComp.cpp)
+set(rtc_exec_src src/SamplingRateConverterComp.cpp src/utils.cpp)
 
 include_directories(
   ${PROJECT_SOURCE_DIR}/include

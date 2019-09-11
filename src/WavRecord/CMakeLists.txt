@@ -48,7 +48,7 @@ set(rtc_srcs
     src/WavRecord.cpp
 )
 
-set(rtc_exec_src src/WavRecordComp.cpp)
+set(rtc_exec_src src/WavRecordComp.cpp src/utils.cpp)
 
 include_directories(
   ${PROJECT_SOURCE_DIR}/include

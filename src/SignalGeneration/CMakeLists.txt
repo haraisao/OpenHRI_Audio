@@ -46,7 +46,7 @@ set(rtc_srcs
     src/SignalGeneration.cpp
 )
 
-set(rtc_exec_src src/SignalGenerationComp.cpp)
+set(rtc_exec_src src/SignalGenerationComp.cpp src/utils.cpp)
 
 include_directories(
   ${PROJECT_SOURCE_DIR}/include

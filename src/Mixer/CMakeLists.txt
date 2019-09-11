@@ -46,7 +46,7 @@ set(rtc_srcs
     src/Mixer.cpp
 )
 
-set(rtc_exec_src src/MixerComp.cpp)
+set(rtc_exec_src src/MixerComp.cpp src/utils.cpp)
 
 include_directories(
   ${PROJECT_SOURCE_DIR}/include

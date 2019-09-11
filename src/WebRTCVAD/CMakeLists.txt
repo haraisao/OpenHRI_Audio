@@ -46,7 +46,7 @@ set(rtc_srcs
     src/WebRTCVAD.cpp
 )
 
-set(rtc_exec_src src/WebRTCVADComp.cpp)
+set(rtc_exec_src src/WebRTCVADComp.cpp src/utils.cpp)
 
 include_directories(
   ${PROJECT_SOURCE_DIR}/include

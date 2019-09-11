@@ -46,7 +46,7 @@ set(rtc_srcs
     src/PulseAudioOutput.cpp
 )
 
-set(rtc_exec_src src/PulseAudioOutputComp.cpp)
+set(rtc_exec_src src/PulseAudioOutputComp.cpp src/utils.cpp)
 
 include_directories(
   ${PROJECT_SOURCE_DIR}/include

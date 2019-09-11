@@ -46,7 +46,7 @@ set(rtc_srcs
     src/PortAudioInput.cpp
 )
 
-set(rtc_exec_src src/PortAudioInputComp.cpp)
+set(rtc_exec_src src/PortAudioInputComp.cpp src/utils.cpp)
 
 include_directories(
   ${PROJECT_SOURCE_DIR}/include

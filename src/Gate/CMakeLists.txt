@@ -46,7 +46,7 @@ set(rtc_srcs
     src/Gate.cpp
 )
 
-set(rtc_exec_src src/GateComp.cpp)
+set(rtc_exec_src src/GateComp.cpp src/utils.cpp)
 
 include_directories(
   ${PROJECT_SOURCE_DIR}/include

@@ -46,7 +46,7 @@ set(rtc_srcs
     src/AutoGainControl.cpp
 )
 
-set(rtc_exec_src src/AutoGainControlComp.cpp)
+set(rtc_exec_src src/AutoGainControlComp.cpp src/utils.cpp)
 
 include_directories(
   ${PROJECT_SOURCE_DIR}/include

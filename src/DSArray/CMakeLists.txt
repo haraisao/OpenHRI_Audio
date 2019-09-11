@@ -48,7 +48,7 @@ set(rtc_srcs
     src/windowing.cpp
 )
 
-set(rtc_exec_src src/DSArrayComp.cpp)
+set(rtc_exec_src src/DSArrayComp.cpp src/utils.cpp)
 
 include_directories(
   ${PROJECT_SOURCE_DIR}/include

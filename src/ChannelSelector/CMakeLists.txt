@@ -46,7 +46,7 @@ set(rtc_srcs
     src/ChannelSelector.cpp
 )
 
-set(rtc_exec_src src/ChannelSelectorComp.cpp)
+set(rtc_exec_src src/ChannelSelectorComp.cpp src/utils.cpp)
 
 include_directories(
   ${PROJECT_SOURCE_DIR}/include

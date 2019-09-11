@@ -46,7 +46,7 @@ set(rtc_srcs
     src/EchoSuppressor.cpp
 )
 
-set(rtc_exec_src src/EchoSuppressorComp.cpp)
+set(rtc_exec_src src/EchoSuppressorComp.cpp src/utils.cpp)
 
 include_directories(
   ${PROJECT_SOURCE_DIR}/include

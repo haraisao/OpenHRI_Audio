@@ -46,7 +46,7 @@ set(rtc_srcs
     src/EchoCanceler.cpp
 )
 
-set(rtc_exec_src src/EchoCancelerComp.cpp)
+set(rtc_exec_src src/EchoCancelerComp.cpp src/utils.cpp)
 
 include_directories(
   ${PROJECT_SOURCE_DIR}/include

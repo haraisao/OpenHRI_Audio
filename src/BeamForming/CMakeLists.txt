@@ -45,7 +45,7 @@ set(rtc_srcs
     src/BeamForming.cpp
 )
 
-set(rtc_exec_src src/BeamFormingComp.cpp)
+set(rtc_exec_src src/BeamFormingComp.cpp src/utils.cpp)
 
 include_directories(
   ${PROJECT_SOURCE_DIR}/include
