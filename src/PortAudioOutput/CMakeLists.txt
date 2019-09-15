@@ -9,7 +9,7 @@ project(PortAudioOutput)
 option(STATIC_LIBS "Build static libraries" OFF)
 option(INSTALL_LOCAL "Install local directory" OFF)
 
-find_package(OpenRTM REQUIRED)
+find_package(OpenRTM-aist REQUIRED)
 
 string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)
 set(PROJECT_VERSION 2.0.0 CACHE STRING "PortAudioOutput version")

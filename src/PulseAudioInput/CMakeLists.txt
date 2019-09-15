@@ -13,7 +13,7 @@ string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)
 set(PROJECT_VERSION 2.0.0 CACHE STRING "PulseAudioInput version")
 set(PROJECT_TYPE "c++/OpenHRI")
 
-find_package(OpenRTM REQUIRED)
+find_package(OpenRTM-aist REQUIRED)
 
 # Add an "uninstall" target
 AddUninstallTarget()
