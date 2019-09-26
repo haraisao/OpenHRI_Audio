@@ -1,14 +1,14 @@
 name : PulseAudioInput
 version: 2.0.0
 vendor: AIST
-max_instances: 1
+max_instance: 1
 executionType: PeriodicExecutionContext
 executionRate: 1.0
 description: Audio Input Component with PulseAudio Library
 category: OpenHRI
-componentKind: DataFlowComponent
-activityType: PERIODIC
-componentType: STATIC 
+component_type : STATIC
+activity_type : PERIODIC
+kind: DataFlowComponent
 maintainer: Isao Hara
 author: Isao Hara(isao-hara@aist.go.jp)
 
@@ -44,17 +44,17 @@ serviceporr : []
 
 configuration :
   - name : InputSampleRate
-    type : int
-    defaultValue : 16000
-    constraints : x >= 1
-    description : 録音する音声のサンプリング周波数(Hz)
+    __type__ : int
+    default : 16000
+    __constraints__ : x >= 1
+    __description__ : 録音する音声のサンプリング周波数(Hz)
   - name : InputChannelNumbers
-    type : int
-    defaultValue : 1
-    constraints : x >= 1
-    description : 録音する音声データのチャンネル数
+    __type__ : int
+    default : 1
+    __constraints__ : x >= 1
+    __description__ : 録音する音声データのチャンネル数
   - name : InputSampleByte
-    type : string
-    defaultValue : 16bits
-    constraints : 8bits,16bits,24bits,32bits
-    description : 録音する音声のフォーマット(ビット深度)
+    __type__ : string
+    default : 16bits
+    __constraints__ : 8bits,16bits,24bits,32bits
+    __description__ : 録音する音声のフォーマット(ビット深度)

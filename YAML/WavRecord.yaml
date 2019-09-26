@@ -1,14 +1,14 @@
 name : WavRecord
 version: 2.0.0
 vendor: AIST
-max_instances: 1
+max_instance: 1
 executionType: PeriodicExecutionContext
 executionRate: 1.0
 description: Record audio data to WAV file
 category: OpenHRI
-componentKind: DataFlowComponent
-activityType: PERIODIC
-componentType: STATIC 
+component_type : STATIC
+activity_type : PERIODIC
+kind: DataFlowComponent
 maintainer: Isao Hara
 author: Isao Hara(isao-hara@aist.go.jp)
 
@@ -37,18 +37,18 @@ dataport :
 
 configuration :
   - name : SampleRate
-    type : int
-    defaultValue : 16000
-    constraints : x >= 1
-    description : 入力される音声データのサンプリング周波数(Hz)
+    __type__ : int
+    default : 16000
+    __constraints__ : x >= 1
+    __description__ : 入力される音声データのサンプリング周波数(Hz)
   - name : FileName
-    type : string
-    defaultValue : wavrecord-default.wav
-    constraints : 
-    description : 録音したデータを保存するファイル名
+    __type__ : string
+    default : wavrecord-default.wav
+    __constraints__ : 
+    __description__ : 録音したデータを保存するファイル名
   - name : ChannelNumbers
-    type : int
-    defaultValue : 1
-    constraints : x >= 1
-    description : 入力される音声データのチャンネル数
+    __type__ : int
+    default : 1
+    __constraints__ : x >= 1
+    __description__ : 入力される音声データのチャンネル数
     

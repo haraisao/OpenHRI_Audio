@@ -1,14 +1,14 @@
 name : Skeleton2JointAngleRTC
 version: 2.0.0
 vendor: AIST
-max_instances: 1
+max_instance: 1
 executionType: PeriodicExecutionContext
 executionRate: 1.0
 description: Skeketon model to Joint angles converter
 category: OpenHRI
-componentKind: DataFlowComponent
-activityType: PERIODIC
-componentType: STATIC 
+component_type : STATIC
+activity_type : PERIODIC
+kind: DataFlowComponent
 maintainer: Isao Hara
 author: Isao Hara(isao-hara@aist.go.jp)
 
@@ -44,7 +44,7 @@ dataport :
 
 configuration :
   - name : mode
-    type : int
-    defaultValue : 0
-    constraints : 0,1
-    description : コマンドモードの切替。0：コマンドモードOff, 1：コマンドモードOn
+    __type__ : int
+    default : 0
+    __constraints__ : 0,1
+    __description__ : コマンドモードの切替。0：コマンドモードOff, 1：コマンドモードOn

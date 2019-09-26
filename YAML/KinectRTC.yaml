@@ -1,14 +1,14 @@
 name : KinectRTC
 version: 2.0.0
 vendor: AIST
-max_instances: 1
+max_instance: 1
 executionType: PeriodicExecutionContext
 executionRate: 1.0
 description: Kinect RTC
 category: OpenHRI
-componentKind: DataFlowComponent
-activityType: PERIODIC
-componentType: STATIC 
+component_type : STATIC
+activity_type : PERIODIC
+kind: DataFlowComponent
 maintainer: Isao Hara
 author: Isao Hara(isao-hara@aist.go.jp)
 
@@ -56,23 +56,23 @@ dataport :
 
 configuration :
   - name : max_angle
-    type : int
-    defaultValue : 0.3
-    constraints : -0.9 <= x <= 0.9
-    description : 録音可能な音源の方向の上限（Kinectの正面を0とする)
+    __type__ : int
+    default : 0.3
+    __constraints__ : -0.9 <= x <= 0.9
+    __description__ : 録音可能な音源の方向の上限（Kinectの正面を0とする)
   - name : min_angle
-    type : int
-    defaultValue : -0.3
-    constraints : -0.9 <= x <= 0.9
-    description : 録音可能な音源の方向の下限（Kinectの正面を0とする)
+    __type__ : int
+    default : -0.3
+    __constraints__ : -0.9 <= x <= 0.9
+    __description__ : 録音可能な音源の方向の下限（Kinectの正面を0とする)
   - name : capture_mode
-    type : int
-    defaultValue : 2
-    constraints : 0,1,2
-    description : 0：画像取得なし、1：カラー画像取得、2：深度画像取得
+    __type__ : int
+    default : 2
+    __constraints__ : 0,1,2
+    __description__ : 0：画像取得なし、1：カラー画像取得、2：深度画像取得
   - name : intval
-    type : int
-    defaultValue : 100
-    constraints : x >= 1
-    description : 画像取得のインターバル設定。ECが、音声取得の周期で動作するために、各周期で画像取得すると、音声取得に影響があるため。
+    __type__ : int
+    default : 100
+    __constraints__ : x >= 1
+    __description__ : 画像取得のインターバル設定。ECが、音声取得の周期で動作するために、各周期で画像取得すると、音声取得に影響があるため。
     

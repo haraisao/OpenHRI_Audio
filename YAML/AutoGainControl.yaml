@@ -1,14 +1,14 @@
 name : AutoGainControl
 version: 2.0.0
 vendor: AIST
-max_instances: 1
+max_instance: 1
 executionType: PeriodicExecutionContext
 executionRate: 1.0
 description: Auto Gain Control
 category: OpenHRI
-componentKind: DataFlowComponent
-activityType: PERIODIC
-componentType: STATIC 
+component_type : STATIC
+activity_type : PERIODIC
+kind: DataFlowComponent
 maintainer: Isao Hara
 author: Isao Hara(isao-hara@aist.go.jp)
 
@@ -43,23 +43,23 @@ serviceport : []
 
 configuration :
   - name : GainCtlSampleByte
-    type : string
-    defaultValue : int16
-    constraints : int8,int16,int24,int32
-    description : ゲイン調整のバイト数
+    __type__ : string
+    default : int16
+    __constraints__ : int8,int16,int24,int32
+    __description__ : ゲイン調整のバイト数
   - name : InputSampleByte
-    type : string
-    defaultValue : int16
-    constraints : int8,int16,int24,int32
-    description : 録音する音声のフォーマット設定
+    __type__ : string
+    default : int16
+    __constraints__ : int8,int16,int24,int32
+    __description__ : 録音する音声のフォーマット設定
   - name : AutomaticGainControl
-    type : int
-    defaultValue : 100
-    constraints : x >= 0
-    description : ゲイン調整パラメータ
+    __type__ : int
+    default : 100
+    __constraints__ : x >= 0
+    __description__ : ゲイン調整パラメータ
   - name : InputChannelNumbers
-    type : int
-    defaultValue : 1
-    constraints : x >= 1
-    description : 出力する音声データのチャンネル数設定
+    __type__ : int
+    default : 1
+    __constraints__ : x >= 1
+    __description__ : 出力する音声データのチャンネル数設定
     

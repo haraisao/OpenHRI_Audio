@@ -1,14 +1,14 @@
 name : ChannelSelector
 version: 2.0.0
 vendor: AIST
-max_instances: 1
+max_instance: 1
 executionType: PeriodicExecutionContext
 executionRate: 1.0
 description: Channel Selector
 category: OpenHRI
-componentKind: DataFlowComponent
-activityType: PERIODIC
-componentType: STATIC 
+component_type : STATIC
+activity_type : PERIODIC
+kind: DataFlowComponent
 maintainer: Isao Hara
 author: Isao Hara(isao-hara@aist.go.jp)
 
@@ -43,22 +43,22 @@ serviceport : []
 
 configuration :
   - name : InputChannelNumbbers
-    type : int
-    defaultValue : 4
-    constraints : x >= 1
-    description : Number of input audio channels
+    __type__ : int
+    default : 4
+    __constraints__ : x >= 1
+    __description__ : Number of input audio channels
   - name : SelectOutputChannel
-    type : int 
-    defaultValue : 1
-    constraints : x >= 1
-    description : Select output audio channel(ch1～)
+    __type__ : int 
+    default : 1
+    __constraints__ : x >= 1
+    __description__ : Select output audio channel(ch1～)
   - name : InputSampleByte
-    type : string
-    defaultValue : int32 
-    constraints : int8,int16,int24,int32
-    description : Sample byte of auduio capture
+    __type__ : string
+    default : int32 
+    __constraints__ : int8,int16,int24,int32
+    __description__ : Sample byte of auduio capture
   - name : ReverseEndian
-    type : string
-    defaultValue : "OFF"
-    constraints : ON,OFF
-    description : Reverse endian
+    __type__ : string
+    default : "OFF"
+    __constraints__ : ON,OFF
+    __description__ : Reverse endian

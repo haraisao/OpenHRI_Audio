@@ -1,14 +1,14 @@
 ame :  BeamForming
 version: 2.0.0
 vendor: AIST
-max_instances: 1
+max_instance: 1
 executionType: PeriodicExecutionContext
 executionRate: 1.0
 description: Beam Forming
 category: OpenHRI
-componentKind: DataFlowComponent
-activityType: PERIODIC
-componentType: STATIC 
+component_type : STATIC
+activity_type : PERIODIC
+kind: DataFlowComponent
 maintainer: Isao Hara
 author: Isao Hara(isao-hara@aist.go.jp)
 
@@ -47,23 +47,23 @@ serviceport : []
 
 configuration :
   - name : SampleRate
-    type : int
-    defaultValue : 16000
-    constraints : x >=1
-    description : 入力音声データのサンプリング周波数(Hz)
+    __type__ : int
+    default : 16000
+    __constraints__ : x >=1
+    __description__ : 入力音声データのサンプリング周波数(Hz)
   - name : ConstAngle
-    type : double
-    defaultValue : 0
-    constraints : 0 <= x <360
-    description : 固定角度モードにおけるビームを向ける角度の設定 (deg)
+    __type__ : double
+    default : 0
+    __constraints__ : 0 <= x <360
+    __description__ : 固定角度モードにおけるビームを向ける角度の設定 (deg)
   - name : Mode
-    type : string
-    defaultValue : Const
-    constraints : Const, Variable
-    description : ビームを固定角度に向けるか可変角度に向けるかの設定
+    __type__ : string
+    default : Const
+    __constraints__ : Const, Variable
+    __description__ : ビームを固定角度に向けるか可変角度に向けるかの設定
   - name : ChannelNumbers
-    type : int
-    defaultValue : 8
-    constraints : x >= 2
-    description : 入力する音声データのチャンネル数
+    __type__ : int
+    default : 8
+    __constraints__ : x >= 2
+    __description__ : 入力する音声データのチャンネル数
     

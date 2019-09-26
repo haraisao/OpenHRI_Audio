@@ -1,14 +1,14 @@
 name : SignalGeneration
 version: 2.0.0
 vendor: AIST
-max_instances: 1
+max_instance: 1
 executionType: PeriodicExecutionContext
 executionRate: 1.0
 description: Signal Generator
 category: OpenHRI
-componentKind: DataFlowComponent
-activityType: PERIODIC
-componentType: STATIC 
+component_type : STATIC
+activity_type : PERIODIC
+kind: DataFlowComponent
 maintainer: Isao Hara
 author: Isao Hara(isao-hara@aist.go.jp)
 
@@ -36,22 +36,22 @@ dataport :
 
 configuration :
   - name : Mode
-    type : string
-    defaultValue : Square
-    constraints : Square,Triangle, Sin
-    description : 生成する信号を設定（矩形波、三角波、正弦波）
+    __type__ : string
+    default : Square
+    __constraints__ : Square,Triangle, Sin
+    __description__ : 生成する信号を設定（矩形波、三角波、正弦波）
   - name : Frequency
-    type : int
-    defaultValue : 100
-    constraints : x >= 1
-    description : 生成する信号の周波数(Hz)
+    __type__ : int
+    default : 100
+    __constraints__ : x >= 1
+    __description__ : 生成する信号の周波数(Hz)
   - name : Gain
-    type : int
-    defaultValue : 1000
-    constraints : x >= 1
-    description : 生成する信号の振幅
+    __type__ : int
+    default : 1000
+    __constraints__ : x >= 1
+    __description__ : 生成する信号の振幅
   - name : OutputSampleRate
-    type : int
-    defaultValue : 16000
-    constraints : x >= 1
-    description : 出力する信号データのサンプリング周波数(Hz)
+    __type__ : int
+    default : 16000
+    __constraints__ : x >= 1
+    __description__ : 出力する信号データのサンプリング周波数(Hz)

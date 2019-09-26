@@ -1,14 +1,14 @@
 name : EchoCanceler
 version: 2.0.0
 vendor: AIST
-max_instances: 1
+max_instance: 1
 executionType: PeriodicExecutionContext
 executionRate: 1.0
 description: Echo Canceler
 category: OpenHRI
-componentKind: DataFlowComponent
-activityType: PERIODIC
-componentType: STATIC 
+component_type : STATIC
+activity_type : PERIODIC
+kind: DataFlowComponent
 maintainer: Isao Hara
 author: Isao Hara(isao-hara@aist.go.jp)
 
@@ -44,6 +44,6 @@ dataport :
     type : RTC::TimedOctetSeq
     description : エコー除去された音声データを出力
 
-serviceport :
+serviceport : []
 
-configuration :
+configuration : []

@@ -1,14 +1,14 @@
 name : Mixer
 version: 2.0.0
 vendor: AIST
-max_instances: 1
+max_instance: 1
 executionType: PeriodicExecutionContext
 executionRate: 1.0
 description: Mixer
 category: OpenHRI
-componentKind: DataFlowComponent
-activityType: PERIODIC
-componentType: STATIC 
+component_type : STATIC
+activity_type : PERIODIC
+kind: DataFlowComponent
 maintainer: Isao Hara
 author: Isao Hara(isao-hara@aist.go.jp)
 
@@ -46,13 +46,13 @@ dataport :
 
 configuration :
   - name : OutputChannelNumbers
-    type : int
-    defaultValue : 1
-    constraints : x >= 1
-    description : 出力する音声データのチャンネル数
+    __type__ : int
+    default : 1
+    __constraints__ : x >= 1
+    __description__ : 出力する音声データのチャンネル数
   - name : MixGains
-    type : std::vector<double>
-    defaultValue : 0.5,0.5
-    constraints : 
-    description : 各チャンネルの混合重み
+    __type__ : std::vector<double>
+    default : 0.5,0.5
+    __constraints__ : 
+    __description__ : 各チャンネルの混合重み
     

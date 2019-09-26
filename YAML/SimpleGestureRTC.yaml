@@ -1,14 +1,14 @@
 name : SimpleGestureRTC
 version: 2.0.0
 vendor: AIST
-max_instances: 1
+max_instance: 1
 executionType: PeriodicExecutionContext
 executionRate: 1.0
 description: Simple Gesture Recognition
 category: OpenHRI
-componentKind: DataFlowComponent
-activityType: PERIODIC
-componentType: STATIC 
+component_type : STATIC
+activity_type : PERIODIC
+kind: DataFlowComponent
 maintainer: Isao Hara
 author: Isao Hara(isao-hara@aist.go.jp)
 
@@ -54,4 +54,4 @@ dataport :
     type : RTC::TimedDouble
     description : 右手がstay,Movingの状態時の右肩からの距離(右方向が正)
 
-configuration :
+configuration : []

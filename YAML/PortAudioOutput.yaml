@@ -3,14 +3,14 @@
 name: PortAudioOutput
 version: 2.0.0
 vendor: AIST
-max_instances: 1
+max_instance: 1
 executionType: PeriodicExecutionContext
 executionRate: 1.0
 description: Audio Output Component with PortAudio Library
 category: OpenHRI
-componentKind: DataFlowComponent
-activityType: PERIODIC
-componentType: STATIC 
+component_type : STATIC
+activity_type : PERIODIC
+kind: DataFlowComponent
 author: isao-hara@aist.go.jp
 
 actions:
@@ -44,22 +44,22 @@ serviceport : []
 
 configuration :
   - name : OutputSampleRate
-    type : int
-    defaultValue : 16000
-    constraints : x >= 1
-    description : 再生する音声のサンプリング周波数(Hz)
+    __type__ : int
+    default : 16000
+    __constraints__ : x >= 1
+    __description__ : 再生する音声のサンプリング周波数(Hz)
   - name : OutputChannelNumbers
-    type : int
-    defaultValue : 1
-    constraints : x >= 1
-    description : 再生する音声データのチャンネル数
+    __type__ : int
+    default : 1
+    __constraints__ : x >= 1
+    __description__ : 再生する音声データのチャンネル数
   - name : InputSampleByte
-    type : string
-    defaultValue : int16
-    constraints : int8,int16,int24,int32
-    description : 再生する音声のフォーマット(ビット深度)
+    __type__ : string
+    default : int16
+    __constraints__ : int8,int16,int24,int32
+    __description__ : 再生する音声のフォーマット(ビット深度)
   - name : DelayCount
-    type : int
-    defaultValue : 0
-    constraints : x >= 0
-    description : 再生する音声データ用のバッファ長
+    __type__ : int
+    default : 0
+    __constraints__ : x >= 0
+    __description__ : 再生する音声データ用のバッファ長
