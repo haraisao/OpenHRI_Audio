@@ -29,10 +29,12 @@ const char* rtcomponent_spec[] =
     "version",           "2.0.0",
     "vendor",            "AIST",
     "category",          "OpenHRI",
+    "component_type",    "STATIC",
     "activity_type",     "PERIODIC",
+    "kind",              "DataFlowComponent",
     "max_instance",      "1",
     "language",          "C++",
-    "lang_type",         "script",
+    "lang_type",         "compile",
     
     "conf.default.SampleRate", "16000",
     "conf.__constraints__.SampleRate", "x >= 1",
